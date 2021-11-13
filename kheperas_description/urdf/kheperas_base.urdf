@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<robot name="kheperas">
+	
+	<link name="base_link">
+		<visual>
+			<!-- geometry parameter of Kheperas body, unit m.	-->
+			<original xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			
+			<geometry>
+				<cylinder length="0.053"	radius="0.07004"	/>
+			</geometry>
+			
+			<material name="blue">
+				<color rgba="0.0 0.0 1 0.6" 	/>
+			</material>
+			
+		</visual>
+	</link>
+	
+	<!-- main wheel dimension: diameter 42mm, width 5.9mm, spacing 105.4mm 	-->
+	<joint name="left_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 -0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="left_wheel_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="left_wheel_link">
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rbga="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+	</link>
+		
+		
+	<joint name="right_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="right_wheel_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="right_wheel_link">
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rbga="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+	</link>
+	
+	<!-- caster dimensions, sphere, diameter 22.68mm. 	-->
+	<joint name="front_caster_joint" 	type="continuous">
+		<origin xyz="0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="front_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="front_caster_link">
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rbga="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+	</link>	
+	
+	<joint name="back_caster_joint" 	type="continuous">
+		<origin xyz="-0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="back_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="back_caster_link">
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rbga="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+	</link>
+</robot>

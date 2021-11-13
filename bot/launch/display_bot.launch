@@ -1,0 +1,20 @@
+<launch>
+	
+	<param name="robot_description" textfile="$(find bot)/urdf/bot.urdf"	/>
+	
+	<!-- setup GUI parameters	-->
+	<param name="use_gui" 	value="true"	/>
+	
+	<!-- run joint_state_publisher, publish joint state	-->
+	<node name="joint_state_publisher" 	pkg="joint_state_publisher" 	type="joint_state_publisher"	/>
+	
+	<!-- run robot_state_publisher, publish tf 	-->
+	<node name="robot_state_publisher" 	pkg="robot_state_publisher" 	type="robot_state_publisher"	/>
+	
+	<!-- run rviz	-->
+	<node name="rviz" 	pkg="rviz" 	type="rviz" 	args="-d $(find bot)/config/urdf.rviz" 	required="true"	/>
+
+</launch>
+
+
+
