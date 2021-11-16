@@ -65,7 +65,7 @@
 			</geometry>
 			
 			<material name="white">
-				<color rbga="1 1 1 1.0" 	/>
+				<color rbga="0.5 0.5 0.5 1.0" 	/>
 			</material>
 			
 		</visual>
