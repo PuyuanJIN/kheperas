@@ -1,9 +1,17 @@
 <?xml version="1.0" ?>
 <robot name="kheperas">
 	
+	<!-- geometry parameter of Kheperas body, radius:0.07004m, height:0.053m	-->
 	<link name="base_link">
+		
+		<inertial>
+			<origin xyz="0.0 0.0 0.0265"	rpy="0.0 0.0 0.0"	/>
+			<!--volume of clyinder V=pi*h*r^2, density 2.6e3 kg/m^3	-->
+			<mass	value="1.06"	/>
+			<inertia ixx="0.00155" ixy="0.0" ixz="0.0" iyy="0.00155" iyz="0.0" izz="0.00260"	/>
+		</inertial>
+		
 		<visual>
-			<!-- geometry parameter of Kheperas body, unit m.	-->
 			<original xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			
 			<geometry>
@@ -13,9 +21,9 @@
 			<material name="blue">
 				<color rgba="0.0 0.0 1 0.6" 	/>
 			</material>
-			
 		</visual>
 	</link>
+	
 	
 	<!-- main wheel dimension: diameter 42mm, width 5.9mm, spacing 105.4mm 	-->
 	<joint name="left_wheel_joint" 	type="continuous">
@@ -26,6 +34,13 @@
 	</joint>
 	
 	<link name="left_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
 		<visual>
 			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
 			<geometry>
@@ -48,6 +63,13 @@
 	</joint>
 	
 	<link name="right_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
 		<visual>
 			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
 			<geometry>
@@ -61,6 +83,8 @@
 		</visual>
 	</link>
 	
+	
+	
 	<!-- caster dimensions, sphere, diameter 22.68mm. 	-->
 	<joint name="front_caster_joint" 	type="continuous">
 		<origin xyz="0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
@@ -70,6 +94,13 @@
 	</joint>
 	
 	<link name="front_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
 		<visual>
 			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
 			<geometry>
@@ -91,6 +122,13 @@
 	</joint>
 	
 	<link name="back_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
 		<visual>
 			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
 			<geometry>
