@@ -1,0 +1,23 @@
+<launch>
+	
+	<param name="robot_description" textfile="$(find kheperas_description)/urdf/arbotix_kheperas_base.urdf"	/>
+	
+	<!-- setup GUI parameters	-->
+	<param name="use_gui" 	value="true"	/>
+	
+	<!-- Config the arbotix controller	-->
+	<node name="arbotix" 	pkg="arbotix_python" 	type="arbotix_driver" 	output="screen">
+		<rosparam file="$(find kheperas_description)/config/arbotix_kheperas.yaml" 	command="load"	/>
+		<param name="sim" value="true"	/>
+	</node>
+	
+	<!-- run joint_state_publisher, publish joint state	-->
+	<node name="joint_state_publisher" 	pkg="joint_state_publisher" 	type="joint_state_publisher"	/>
+	
+	<!-- run robot_state_publisher, publish tf 	-->
+	<node name="robot_state_publisher" 	pkg="robot_state_publisher" 	type="robot_state_publisher"	/>
+	
+	<!-- run rviz	-->
+	<node name="rviz" 	pkg="rviz" 	type="rviz" 	args="-d $(find kheperas_description)/config/arbotix_kheperas.rviz" 	required="true"	/>
+
+</launch>

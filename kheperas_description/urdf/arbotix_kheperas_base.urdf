@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+<robot name="kheperas">
+	
+	<link name="base_footprint">
+		<visual>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<box size="0.001 0.001 0.001"	/>
+			</geometry>
+		</visual>
+	</link>
+	
+	<joint name="base_footprint_joint"	type="fixed">
+		<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+		<parent link="base_footprint" />
+		<child link="base_link"	/>
+	</joint>
+	
+	
+	<!-- geometry parameter of Kheperas body, radius:0.07004m, height:0.053m	-->
+	<link name="base_link">
+		
+		<inertial>
+			<origin xyz="0.0 0.0 0.0265"	rpy="0.0 0.0 0.0"	/>
+			<!--volume of clyinder V=pi*h*r^2, density 2.6e3 kg/m^3	-->
+			<mass	value="1.06"	/>
+			<inertia ixx="0.00155" ixy="0.0" ixz="0.0" iyy="0.00155" iyz="0.0" izz="0.00260"	/>
+		</inertial>
+		
+		<visual>
+			<original xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			
+			<geometry>
+				<cylinder length="0.053"	radius="0.07004"	/>
+			</geometry>
+			
+			<material name="blue">
+				<color rgba="0.0 0.0 1 0.6" 	/>
+			</material>
+		</visual>
+	</link>
+	
+	
+	<!-- main wheel dimension: diameter 42mm, width 5.9mm, spacing 105.4mm 	-->
+	<!--left wheel joint	-->
+	<joint name="base_l_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 -0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="left_wheel_link" />
+		<axis	xyz="0.0 0.0 1.0" />
+	</joint>
+	
+	<link name="left_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rbga="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+	</link>
+		
+	<!--right wheel joint	-->	
+	<joint name="base_r_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="right_wheel_link" />
+		<axis	xyz="0.0 0.0 1.0" />
+	</joint>
+	
+	<link name="right_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rbga="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+	</link>
+	
+	
+	
+	<!-- caster dimensions, sphere, diameter 22.68mm. 	-->
+	<joint name="front_caster_joint" 	type="continuous">
+		<origin xyz="0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="front_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="front_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rbga="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+	</link>	
+	
+	<joint name="back_caster_joint" 	type="continuous">
+		<origin xyz="-0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="back_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<link name="back_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rbga="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+	</link>
+</robot>
