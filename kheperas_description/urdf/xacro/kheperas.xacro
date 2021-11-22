@@ -1,0 +1,7 @@
+<?xml version='1.0'?>
+<robot name='kheperas' xmlns:xacro='http://www.ros.org/wiki/xacro'>
+
+	<xacro:include filename='$(find kheperas_description)/urdf/xacro/kheperas_base.xacro' />
+	
+	<kheperas />
+</robot>

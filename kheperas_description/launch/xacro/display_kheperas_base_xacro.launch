@@ -1,0 +1,20 @@
+<launch>
+	<arg name='model' default="$(find xacro)/xacro --inorder '$(find kheperas_description)/urdf/xacro/kheperas.xacro'" />
+	<arg name='gui' default='true' />
+	
+	<param name='robot_description' command="$(arg model)" />
+	
+	<!-- set up gui parameters, show joint control pannel -->
+	<param name='use_gui' value='$(arg gui)' />
+	
+	<!-- joint state publisher -->
+	<node name='joint_state_publisher' pkg='joint_state_publisher' type='joint_state_publisher' />
+	
+	<!-- rbot state publisher -->
+	<node name='robot_state_publisher' pkg='robot_state_publisher' type='robot_state_publisher' />
+	
+	<!-- rviz config -->
+	<node name='rviz' pkg='rviz' type='rviz' args='-d $(find kheperas_description)/config/display_kheperas.rviz' required='true' />
+	
+</launch>
+
