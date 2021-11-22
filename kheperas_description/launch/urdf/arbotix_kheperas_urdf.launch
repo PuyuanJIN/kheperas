@@ -1,6 +1,6 @@
 <launch>
 	
-	<param name="robot_description" textfile="$(find kheperas_description)/urdf/arbotix_kheperas_base.urdf"	/>
+	<param name="robot_description" textfile="$(find kheperas_description)/urdf/urdf/arbotix_kheperas_base.urdf"	/>
 	
 	<!-- setup GUI parameters	-->
 	<param name="use_gui" 	value="true"	/>
