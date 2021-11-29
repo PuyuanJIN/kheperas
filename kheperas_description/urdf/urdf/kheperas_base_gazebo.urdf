@@ -10,6 +10,11 @@
 		</visual>
 	</link>
 	
+	<!-- base footprint gazebo parameter -->
+	<gazebo reference="base_footprint">
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+	
 	<joint name="base_footprint_joint"	type="fixed">
 		<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 		<parent link="base_footprint" />
@@ -27,6 +32,13 @@
 			<inertia ixx="0.00155" ixy="0.0" ixz="0.0" iyy="0.00155" iyz="0.0" izz="0.00260"	/>
 		</inertial>
 		
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder length="0.053"	radius="0.07004"	/>
+			</geometry>
+		</collision>
+		
 		<visual>
 			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			
@@ -40,6 +52,9 @@
 		</visual>
 	</link>
 	
+	<gazebo reference="base_link">
+		<material>Gazebo/Blue</material>
+	</gazebo>
 	
 	<!-- main wheel dimension: diameter 42mm, width 5.9mm, spacing 105.4mm 	-->
 	<!--left wheel joint	-->
@@ -65,12 +80,35 @@
 			</geometry>
 			
 			<material name="white">
-				<color rbga="0.5 0.5 0.5 1.0" 	/>
+				<color rbga="1.0 1.0 1.0 1.0" 	/>
 			</material>
 			
 		</visual>
+		
+		<collision>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+		</collision>
 	</link>
 		
+	<gazebo reference="base_l_wheel_joint">
+		<material>Gazebo/White</material>
+	</gazebo>
+	
+	<!--transmission to link the left joint to motor -->
+	<transmission name="base_l_wheel_joint_trans">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="base_l_wheel_joint">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="l_wheel_joint_motor">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
+	
 	<!--right wheel joint	-->	
 	<joint name="base_r_wheel_joint" 	type="continuous">
 		<origin xyz="0.0 0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
@@ -98,11 +136,33 @@
 			</material>
 			
 		</visual>
+		
+		<collision>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+		</collision>
 	</link>
 	
+	<gazebo reference="base_r_wheel_joint">
+		<material>Gazebo/White</material>
+	</gazebo>
 	
+	<!--transmission to link the right joints and the controller -->
+	<transmission name="base_r_wheel_joint_trans">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="base_r_wheel_joint">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="r_wheel_joint_motor">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
 	
 	<!-- caster dimensions, sphere, diameter 22.68mm. 	-->
+	<!-- front caster joint -->
 	<joint name="front_caster_joint" 	type="continuous">
 		<origin xyz="0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
 		<parent link="base_link" />
@@ -110,6 +170,7 @@
 		<axis	xyz="0.0 1.0 0.0" />
 	</joint>
 	
+	<!-- front caster link -->
 	<link name="front_caster_link">
 		<inertial>
 			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
@@ -131,6 +192,12 @@
 		</visual>
 	</link>	
 	
+	<!-- front caster link gazebo reference -->
+	<gazebo reference="front_caster_link">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	
+	<!-- back caster joint -->
 	<joint name="back_caster_joint" 	type="continuous">
 		<origin xyz="-0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
 		<parent link="base_link" />
@@ -138,6 +205,7 @@
 		<axis	xyz="0.0 1.0 0.0" />
 	</joint>
 	
+	<!-- back caster link -->
 	<link name="back_caster_link">
 		<inertial>
 			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
@@ -158,4 +226,36 @@
 			
 		</visual>
 	</link>
+	
+	<!--back caster link gazebo reference -->
+	<gazebo reference="back_caster_link">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<rosDebugLevel>Debug</rosDebugLevel>
+			<publishWheelTF>true</publishWheelTF>
+			<robotNamespace>/</robotNamespace>
+			<publishTf>1</publishTf>
+			<publishWheelJointState>true</publishWheelJointState>
+			<alwaysOn>true</alwaysOn>
+			<updateRate>100</updateRate>
+			<legacyMode>true</legacyMode>
+			<leftJoint>base_l_wheel_joint</leftJoint>
+			<rightJoint>base_r_wheel_joint</rightJoint>
+			<wheelSeparation>0.1054</wheelSeparation>
+			<wheelDiameter>0.042</wheelDiameter>
+			<broadcastTF>1</broadcastTF>
+			<wheelTorque>30</wheelTorque>
+			<wheelAcceleration>1.8</wheelAcceleration>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryFrame>odom</odometryFrame>
+			<odometryTopic>odom</odometryTopic>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<publishOdomTF>true</publishOdomTF>
+		</plugin>
+	</gazebo>
+	
+			
 </robot>
