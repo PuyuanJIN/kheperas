@@ -7,7 +7,7 @@ controllers: {
       Kp: 12,
       Kd: 12,
       Ki: 0,
-      Ko: 50,
+      Ko: 0, <!-- it was 50 -->
       accel_limit: 1.0,
    }
 }
