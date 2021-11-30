@@ -90,6 +90,14 @@
 			<geometry>
 				<cylinder radius="0.021" 	length="0.0059"	/>
 			</geometry>
+			<surface>
+				<friction>
+					<ode>
+						<mu1>10.0</mu1>
+						<mu2>10.0</mu2>
+					</ode>
+				</friction>
+			</surface>
 		</collision>
 	</link>
 		
@@ -142,6 +150,14 @@
 			<geometry>
 				<cylinder radius="0.021" 	length="0.0059"	/>
 			</geometry>
+			<surface>
+				<friction>
+					<ode>
+						<mu1>10.0</mu1>
+						<mu2>10.0</mu2>
+					</ode>
+				</friction>
+			</surface>
 		</collision>
 	</link>
 	
@@ -247,8 +263,8 @@
 			<wheelSeparation>0.1054</wheelSeparation>
 			<wheelDiameter>0.042</wheelDiameter>
 			<broadcastTF>1</broadcastTF>
-			<wheelTorque>30</wheelTorque>
-			<wheelAcceleration>1.8</wheelAcceleration>
+			<wheelTorque>20</wheelTorque>
+			<wheelAcceleration>0.5</wheelAcceleration>
 			<commandTopic>cmd_vel</commandTopic>
 			<odometryFrame>odom</odometryFrame>
 			<odometryTopic>odom</odometryTopic>
