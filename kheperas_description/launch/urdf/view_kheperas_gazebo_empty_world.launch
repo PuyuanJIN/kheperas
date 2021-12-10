@@ -20,7 +20,8 @@
     <param name="robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas_base_gazebo.urdf" /> 
 
     <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
+    </node> 
 
     <!-- 运行robot_state_publisher节点，发布tf  -->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
@@ -30,5 +31,9 @@
     <!-- 在gazebo中加载机器人模型-->
     <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
           args="-urdf -model mrobot -param robot_description"/> 
+    
+    <!-- this is newly added on 10/12/2021 in order to give fideltiy to the controller-->
+    <rosparam file="$(find kheperas_description)/config/my_differential_drive.yaml" command="load" />
+    <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="base_controller" />
 
 </launch>

@@ -1,5 +1,5 @@
-controllers: {
-   base_controller: {
+controllers: 
+   base_controller: 
       type: diff_controller,
       base_frame_id: base_footprint,
       base_width: 0.1054,
@@ -9,5 +9,5 @@ controllers: {
       Ki: 0,
       Ko: 0, <!-- it was 50 -->
       accel_limit: 1.0,
-   }
-}
+   
+
