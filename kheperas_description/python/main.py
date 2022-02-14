@@ -1,4 +1,6 @@
 
+from email.errors import MissingHeaderBodySeparatorDefect
+from pdb import post_mortem
 import rospy
 import actionlib
 from smach import State, StateMachine
@@ -20,6 +22,8 @@ sys.path.append('~/home/catkin_ws/src/kheperas_description/python')
 from position import *
 from move import *
 from rotation import *
+from pathloss import *
+
 
 
 
@@ -29,8 +33,9 @@ class Move(State):
     
     def execute(self, userdata):
 
-        move(1,2.0)
-        display_position()
+        move(1,0.5)
+        position_mrobot()
+        print('success')
         return 'success'
 
 
@@ -41,19 +46,22 @@ class Rotate(State):
     def execute(self, userdata):
 
         rotate(90)
-        display_position()
+        sleep(1)
+        position_mrobot()
+        print('success')
         return 'success'
 
 
 class Wait(State):
     def __init__(self):
-        State.__init__(self, outcomes=['move','rotate'])
+        State.__init__(self, outcomes=['move','rotate','signal check'])
     
     def execute(self, userdata):
         print('''
         #####################
         # m     -move
         # r     -rotate
+        # s     -signal check
         #####################
         ''')
         command = input('user input>')
@@ -61,8 +69,21 @@ class Wait(State):
             return 'move'
         elif command == 'r':
             return 'rotate'
+        elif command == 's':
+            return('signal check')
         else:
             exit()
+
+class Signal(State):
+    def __init__(self):
+        State.__init__(self, outcomes=['success'])
+    
+    def execute(self, userdata):
+
+        a=FSPL()
+        print(round(a,3))
+        print('success')
+        return 'success'
 
 
 if __name__ == '__main__':
@@ -71,9 +92,10 @@ if __name__ == '__main__':
     patrol = StateMachine('WAIT')
 
     with patrol:
-        StateMachine.add('WAIT', Wait(), transitions={'move':'Move','rotate':'Rotate'})
+        StateMachine.add('WAIT', Wait(), transitions={'move':'Move','rotate':'Rotate','signal check':'Signal'})
         StateMachine.add('Move',Move(),transitions={'success':'WAIT'})
         StateMachine.add('Rotate', Rotate(),transitions={'success':'WAIT'})
+        StateMachine.add('Signal', Signal(),transitions={'success':'WAIT'})
 
     
     patrol.execute()

@@ -20,7 +20,7 @@ from position import *
 def planner(goal):
 
     # read robot current position and the goal position #
-    (x_cur, y_cur, yaw_cur) = position1()
+    (x_cur, y_cur, yaw_cur) = position_mrobot()
     x_goal = float(goal[0])
     y_goal = float(goal[1])
 
@@ -67,10 +67,10 @@ def rotate(degrees):
     move_cmd.angular.y = 0.0
     move_cmd.angular.z = 0.0
 
-    #set default angular speed to 0.5 rad/s
+    #set default angular speed to 0.3 rad/s
     angular_speed = 0.5
     #set default command signal rate to 5Hz
-    Hz = 5
+    Hz = 20
 
     goal = math.radians(degrees)
     t = goal/angular_speed*Hz

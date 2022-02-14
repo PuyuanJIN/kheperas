@@ -26,7 +26,7 @@ def move(direction,distance):
     move_cmd.angular.z = 0.0
 
     #set default speed 
-    linear_speed = 0.15
+    linear_speed = 0.20
     #set default command signal rate
     Hz = 5
 
@@ -40,6 +40,7 @@ def move(direction,distance):
     while i <= t_total:
         if i < t:
             move_cmd.linear.x = direction * linear_speed
+            
         else:
             move_cmd.linear.x = 0.0
         
