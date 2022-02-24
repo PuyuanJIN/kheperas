@@ -30,6 +30,25 @@
         <param name="publish_frequency" type="double" value="50.0" />
     </node>
 
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization" clear_params="true" output="screen">
+        <param name="frequency" value="30"/>
+        <rosparam param="odom0_config">[true, true, false,
+                                        false, false, true,
+                                        true, true, false,
+                                        false, false, true,
+                                        false, false, false]
+                                        </rosparam>
+        <rosparam param="imu0_config">[false, false, false,
+                                        false, false, true,
+                                        false, false, false,
+                                        false, false, true,
+                                        true, false, false]</rosparam>
+        <param name="two_d_mode" value="true"/>
+        <param name="odom0_differential" value="true"/>
+        <param name="imu0_differential" value="true"/>
+   </node>
+
+
     <!-- 在gazebo中加载机器人模型-->
     <node name="urdf_spawner_1" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
           args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model mrobot -param robot_description"/> 
