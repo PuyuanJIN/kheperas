@@ -25,7 +25,7 @@ import numpy as np
 
 def eta_calculator():
     x = np.linspace(0.01,3)
-    qpsk = special.erfc(x)
+    qpsk = special.erfc(0.1*x)
     log = [math.log(1-i,10) for i in qpsk]
     deliveryfailure = [1 - math.e**(4*i) for i in log]
     
@@ -49,7 +49,7 @@ def FSPL():
 
     
     eta=1
-    #the power of a standard router is 100mW at 2.4GHz
+    #the power of a standard router is 100mW at 2.4GHz 
     print('The receving power is {} mW'.format(eta*((signal_wavelength/math.pi/4/dist)**2)*100))
     return (eta*((signal_wavelength/math.pi/4/dist)**2)*100*(10**(-3)))
 
@@ -75,6 +75,4 @@ def DeliveryFailure():
     deliveryfailure = 1 - math.e**(byte*log)
     print('the probability of delivery failure is: {}.'.format(deliveryfailure))
     
-    
-
 

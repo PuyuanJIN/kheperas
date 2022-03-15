@@ -1,0 +1,455 @@
+<?xml version="1.0" ?>
+<robot name="kheperas">
+	
+
+	<link name="base_footprint">
+		<visual>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<box size="0.001 0.001 0.001"	/>
+			</geometry>
+		</visual>
+	</link>
+	
+	<!-- base footprint gazebo parameter -->
+	<gazebo reference="base_footprint">
+		<turnGravityOff>false</turnGravityOff>
+	</gazebo>
+	
+	<joint name="base_footprint_joint"	type="fixed">
+		<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+		<parent link="base_footprint" />
+		<child link="base_link"	/>
+	</joint>
+	
+	
+	<!-- geometry parameter of Kheperas body, radius:0.07004m, height:0.053m	-->
+	<link name="base_link">
+		
+		<inertial>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			<!--volume of clyinder V=pi*h*r^2, density 2.6e3 kg/m^3	-->
+			<mass	value="1.06"	/> <!-- 1.06->10.6 30/11/21 -->
+			<inertia ixx="0.00155" ixy="0.0" ixz="0.0" iyy="0.00155" iyz="0.0" izz="0.00260"	/> <!-- 0.00155->0.0155 0.00155->0.0155 0.0026->0.0260 30/11/21 -->
+		</inertial>
+		
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder length="0.053"	radius="0.07004"	/>
+			</geometry>
+		</collision>
+		
+		<visual>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			
+			<geometry>
+				<cylinder length="0.053"	radius="0.07004"	/>
+			</geometry>
+			
+			<material name="blue">
+				<color rgba="0.0 0.0 1 0.6" 	/>
+			</material>
+		</visual>
+	</link>
+	
+	<gazebo reference="base_link">
+		<material>Gazebo/Blue</material>
+
+		<!-- IMU plugin -->
+		<gravity>true</gravity>
+		<sensor name='imu_sensor' type='imu'>
+			<always_on>true</always_on>
+			<update_rate>50</update_rate>
+			<visualize>true</visualize>
+			<topic>__default_topic__</topic>
+			<plugin filename='libgazebo_ros_imu_sensor.so' name='imu_plugin'>
+				<topicName>imu</topicName>
+				<bodyName>base_link</bodyName>
+				<updateRateHZ>15.0</updateRateHZ>
+				<gaussianNoise>0.0</gaussianNoise>
+				<xyzOffset>0.0 0.0 0.0</xyzOffset>
+				<rpyOffset>0.0 0.0 0.0</rpyOffset>
+				<frameName>imu_link</frameName>
+			</plugin>
+			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+		</sensor>
+	</gazebo>
+	
+	<!-- main wheel dimension: diameter 42mm, width 5.9mm, spacing 105.4mm 	-->
+	<!--left wheel joint	-->
+	<joint name="base_l_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 -0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_footprint" />
+		<child	link="left_wheel_link" />
+		<axis	xyz="0.0 0.0 1.0" />
+	</joint>
+	
+	<link name="left_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rgba="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+		
+		<collision>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			<surface>
+				<friction>
+					<ode>
+						<mu1>10.0</mu1>
+						<mu2>10.0</mu2>
+					</ode>
+				</friction>
+			</surface>
+		</collision>
+	</link>
+		
+	<gazebo reference="base_l_wheel_joint">
+		<material>Gazebo/White</material>
+	</gazebo>
+	
+	<!--transmission to link the left joint to motor -->
+	<transmission name="base_l_wheel_joint_trans">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="base_l_wheel_joint">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="l_wheel_joint_motor">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
+	
+	<!--right wheel joint	-->	
+	<joint name="base_r_wheel_joint" 	type="continuous">
+		<origin xyz="0.0 0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
+		<parent link="base_footprint" />
+		<child	link="right_wheel_link" />
+		<axis	xyz="0.0 0.0 1.0" />
+	</joint>
+	
+	<link name="right_wheel_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
+			<mass	value="0.021"	/>
+			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			
+			<material name="white">
+				<color rgba="1 1 1 1.0" 	/>
+			</material>
+			
+		</visual>
+		
+		<collision>
+			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<cylinder radius="0.021" 	length="0.0059"	/>
+			</geometry>
+			<surface>
+				<friction>
+					<ode>
+						<mu1>10.0</mu1>
+						<mu2>10.0</mu2>
+					</ode>
+				</friction>
+			</surface>
+		</collision>
+	</link>
+	
+	<gazebo reference="base_r_wheel_joint">
+		<material>Gazebo/White</material>
+	</gazebo>
+	
+	<!--transmission to link the right joints and the controller -->
+	<transmission name="base_r_wheel_joint_trans">
+		<type>transmission_interface/SimpleTransmission</type>
+		<joint name="base_r_wheel_joint">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+		</joint>
+		<actuator name="r_wheel_joint_motor">
+			<hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+			<mechanicalReduction>1</mechanicalReduction>
+		</actuator>
+	</transmission>
+	
+	<!-- caster dimensions, sphere, diameter 22.68mm. 	-->
+	<!-- front caster joint -->
+	<joint name="front_caster_joint" 	type="continuous">
+		<origin xyz="0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="front_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<!-- front caster link -->
+	<link name="front_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rgba="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+		</collision>
+	</link>	
+	
+	<!-- front caster link gazebo reference -->
+	<gazebo reference="front_caster_link">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	
+	<!-- back caster joint -->
+	<joint name="back_caster_joint" 	type="continuous">
+		<origin xyz="-0.050 0.0 -0.01986"	rpy="0.0 0.0 0.0" 	/>
+		<parent link="base_link" />
+		<child	link="back_caster_link" />
+		<axis	xyz="0.0 1.0 0.0" />
+	</joint>
+	
+	<!-- back caster link -->
+	<link name="back_caster_link">
+		<inertial>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
+			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
+			<mass	value="0.0061"	/>
+			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
+		</inertial>
+		
+		<visual>
+			<orginal xyz="0.0 0.0 0.0" rpy="1.5707 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+			
+			<material name="black">
+				<color rgba="0.0 0.0 0.0 0.5" 	/>
+			</material>
+			
+		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+		</collision>
+	</link>
+	
+	<!--back caster link gazebo reference -->
+	<gazebo reference="back_caster_link">
+		<material>Gazebo/Black</material>
+	</gazebo>
+	
+	<!-- this is the laser link which a rplidar will be used-->
+	<link name="laser_link">
+		<inertial>
+			<mass value="0.1" />
+			<origin xyz="0.0 0.0 0.0" />
+			<inertia ixx="0.01" ixy="0.00" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+		</inertial>
+		
+		<visual>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+			<geometry>
+				<cylinder length="0.02" radius="0.02" />
+			</geometry>
+			<material name="black">
+				<color rgba="0.0 0.0 0.0 1.0" />
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+			<geometry>
+				<cylinder radius="0.05" length="0.06"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<gazebo reference="laser_link">
+		<material>Gazebo/Black</material>
+		<sensor type="ray" name="rplidar">
+			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+			<visualize>false</visualize>
+			<update_rate>5.5</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>360</samples>
+						<resolution>1</resolution>
+						<min_angle>-3</min_angle>
+						<max_angle>3</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>10.0</max>
+					<resolution>0.01</resolution>
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.01</stddev>
+				</noise>
+			</ray>
+			<plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
+				<topicName>/scan</topicName>
+				<frameName>laser_link</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- laser joint-->
+	<joint name="laser_joint" type="fixed">
+		<origin xyz="0.0 0.0 0.0265" rpy="0.0 0.0 0.0"/>
+		<parent link="base_link"/>
+		<child link="laser_link"/>
+	</joint>
+
+
+
+	<joint name="camera_joint" type="fixed">
+    	<axis xyz="0 1 0" />
+    	<origin xyz="-0.07 0.0 0.0" rpy="0 0 3.14159"/>
+    	<parent link="base_link"/>
+    	<child link="camera_link"/>
+  	</joint>
+
+  	<!-- Camera -->
+  	<link name="camera_link">
+    	<collision>
+      		<origin xyz="0 0 0" rpy="0 0 0"/>
+      		<geometry>
+    			<box size="0.02 0.02 0.01"/>
+      		</geometry>
+    	</collision>
+
+    	<visual>
+      		<origin xyz="0 0 0" rpy="0 0 0"/>
+      		<geometry>
+    			<box size="0.02 0.02 0.02"/>
+      		</geometry>
+      		<material name="red">
+			  <color rgba="1.0 0.25 0.25 0.0" />
+			</material>
+    	</visual>
+
+    	<inertial>
+      		<mass value="1e-5" />
+      		<origin xyz="0 0 0" rpy="0 0 0"/>
+      		<inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    	</inertial>
+  	</link>
+
+
+	<!-- camera -->
+  	<gazebo reference="camera_link">
+    	<sensor type="camera" name="keperas_camera">
+      		<update_rate>30.0</update_rate>
+      		<camera name="keperas_camera">
+       			<horizontal_fov>1.3962634</horizontal_fov>
+        		<image>
+          			<width>800</width>
+          			<height>800</height>
+          			<format>R8G8B8</format>
+        		</image>
+        		<clip>
+          			<near>0.02</near>
+          			<far>300</far>
+        		</clip>
+        		<noise>
+          			<type>gaussian</type>
+          			<!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          			<mean>0.0</mean>
+          			<stddev>0.007</stddev>
+        		</noise>
+      		</camera>
+      		<plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        		<alwaysOn>true</alwaysOn>
+        		<updateRate>0.0</updateRate>
+        		<cameraName>keperas_camera</cameraName>
+        		<imageTopicName>image_raw</imageTopicName>
+        		<cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        		<frameName>camera_link</frameName>
+        		<hackBaseline>0.07</hackBaseline>
+        		<distortionK1>0.0</distortionK1>
+        		<distortionK2>0.0</distortionK2>
+        		<distortionK3>0.0</distortionK3>
+        		<distortionT1>0.0</distortionT1>
+        		<distortionT2>0.0</distortionT2>
+      		</plugin>
+    	</sensor>
+  	</gazebo>
+		
+
+	<gazebo>
+		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+			<rosDebugLevel>Debug</rosDebugLevel>
+			<publishWheelTF>false</publishWheelTF>
+			<robotNamespace>/</robotNamespace>
+			<publishTf>1</publishTf>
+			<publishWheelJointState>true</publishWheelJointState>
+			<alwaysOn>true</alwaysOn>
+			<updateRate>100</updateRate>
+			<legacyMode>true</legacyMode>
+			<leftJoint>base_l_wheel_joint</leftJoint>
+			<rightJoint>base_r_wheel_joint</rightJoint>
+			<wheelSeparation>0.1054</wheelSeparation>
+			<wheelDiameter>0.042</wheelDiameter>
+			<broadcastTF>1</broadcastTF>
+			<wheelTorque>20</wheelTorque>
+			<wheelAcceleration>0.5</wheelAcceleration>
+			<commandTopic>cmd_vel</commandTopic>
+			<odometryFrame>odom</odometryFrame>
+			<odometryTopic>odom</odometryTopic>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<publishOdomTF>true</publishOdomTF>
+		</plugin>
+	</gazebo>
+	
+			
+</robot>
