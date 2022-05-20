@@ -14,7 +14,7 @@ import roslib
 def move(direction,distance):
 
     #ros velocity publisher initialised
-    vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+    vel_pub = rospy.Publisher('/reference/cmd_vel', Twist, queue_size=1)
 
     #move cmd initialized
     move_cmd = Twist()

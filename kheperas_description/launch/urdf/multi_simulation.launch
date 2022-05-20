@@ -10,7 +10,6 @@
 
     <!-- 运行gazebo仿真环境 -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(arg world_name)" />
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
         <arg name="paused" value="$(arg paused)"/>
@@ -18,30 +17,46 @@
         <arg name="headless" value="$(arg headless)"/>
     </include>
 
-    
-    
-    <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
-    </node> 
 
-    <!-- 运行robot_state_publisher节点，发布tf  -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
+    <group ns='robot1'>
+
+        <!-- 加载机器人模型描述参数 -->
+        <param name="robot_description_1" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
+
+        <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
+        <node name="joint_state_publisher_1" pkg="joint_state_publisher" type="joint_state_publisher" >
+        </node> 
+
+        <!-- 运行robot_state_publisher节点，发布tf  -->
+        <node name="robot_state_publisher_1" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
         <param name="publish_frequency" type="double" value="50.0" />
-    </node>
+        </node> 
 
         <!-- 在gazebo中加载机器人模型-->
         <node name="urdf_spawner_1" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-            args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model mrobot -param robot_description"/>
+            args="-x 2.0 -y 2.0 -Y 0.0 -urdf -model mrobot -param robot_description_1"/>
 
-        <node pkg='tf' type='static_fransform_publisher' name='odom_to_base_footprint' args='0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_footprint 1000' /> 
+        <!--node pkg='tf' type='static_fransform_publisher' name='odom_to_base_footprint' args='0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_footprint 1000' /--> 
     </group>
 
-    <group ns='robot2'>
-        <param name="reference_robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas_base_gazebo.urdf" /> 
 
-     <!-- 在gazebo中加载机器人模型-->
+
+    <group ns='robot2'>
+        <param name="reference_robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" /> 
+
+        <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
+        <node name="joint_state_publisher_2" pkg="joint_state_publisher" type="joint_state_publisher" >
+        </node> 
+
+        <!-- 运行robot_state_publisher节点，发布tf  -->
+        <node name="robot_state_publisher_2" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
+        <param name="publish_frequency" type="double" value="50.0" />
+        </node> 
+        
+
+        <!-- 在gazebo中加载机器人模型-->
         <node name="urdf_spawner_2" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-            args="-urdf -model referenceRobot -param reference_robot_description"/> 
+            args="-unpause -urdf -model referenceRobot -param reference_robot_description"/> 
 
         
     <!-- run rviz	-->

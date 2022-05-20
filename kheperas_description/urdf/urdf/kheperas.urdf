@@ -335,7 +335,7 @@
 				</noise>
 			</ray>
 			<plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
-				<topicName>/scan</topicName>
+				<topicName>/robot1/scan</topicName>
 				<frameName>laser_link</frameName>
 			</plugin>
 		</sensor>
@@ -430,7 +430,7 @@
 		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 			<rosDebugLevel>Debug</rosDebugLevel>
 			<publishWheelTF>false</publishWheelTF>
-			<robotNamespace>/</robotNamespace>
+			<robotNamespace>/robot1</robotNamespace>
 			<publishTf>1</publishTf>
 			<publishWheelJointState>true</publishWheelJointState>
 			<alwaysOn>true</alwaysOn>

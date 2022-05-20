@@ -26,7 +26,7 @@
 	<link name="base_link">
 		
 		<inertial>
-			<origin xyz="0.0 0.0 0.0265"	rpy="0.0 0.0 0.0"	/>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			<!--volume of clyinder V=pi*h*r^2, density 2.6e3 kg/m^3	-->
 			<mass	value="1.06"	/> <!-- 1.06->10.6 30/11/21 -->
 			<inertia ixx="0.00155" ixy="0.0" ixz="0.0" iyy="0.00155" iyz="0.0" izz="0.00260"	/> <!-- 0.00155->0.0155 0.00155->0.0155 0.0026->0.0260 30/11/21 -->
@@ -67,7 +67,7 @@
 	
 	<link name="left_wheel_link">
 		<inertial>
-			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
 			<mass	value="0.021"	/>
 			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
@@ -88,7 +88,7 @@
 		<collision>
 			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
 			<geometry>
-				<cylinder radius="0.015" 	length="0.0030"	/> <!-- 0.021->0.02 0.0059->0.0058 10/12/2021-->
+				<cylinder radius="0.021" 	length="0.0059"	/> <!-- 0.021->0.02 0.0059->0.0058 10/12/2021-->
 			</geometry>
 			<surface>
 				<friction>
@@ -127,7 +127,7 @@
 	
 	<link name="right_wheel_link">
 		<inertial>
-			<origin xyz="0.0 0.0 0.0105"	rpy="0.0 0.0 0.0"	/>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			<!--Volume of a cylinder V=pi*h*r^2, density 2.6e3kg/m^3	-->
 			<mass	value="0.021"	/>
 			<inertia ixx="0.00000238" ixy="0.0" ixz="0.0" iyy="0.00000238" iyz="0.0" izz="0.00000463"	/>
@@ -148,7 +148,7 @@
 		<collision>
 			<orginal xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
 			<geometry>
-				<cylinder radius="0.015" 	length="0.0030"	/> <!-- 0.021->0.02 0.0059->0.0058 10/12/2021-->
+				<cylinder radius="0.021" 	length="0.0059"	/> <!-- 0.021->0.02 0.0059->0.0058 10/12/2021-->
 			</geometry>
 			<surface>
 				<friction>
@@ -189,7 +189,7 @@
 	<!-- front caster link -->
 	<link name="front_caster_link">
 		<inertial>
-			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
 			<mass	value="0.0061"	/>
 			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
@@ -204,8 +204,14 @@
 			<material name="black">
 				<color rbga="0.0 0.0 0.0 0.5" 	/>
 			</material>
-			
 		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+		</collision>
 	</link>	
 	
 	<!-- front caster link gazebo reference -->
@@ -224,7 +230,7 @@
 	<!-- back caster link -->
 	<link name="back_caster_link">
 		<inertial>
-			<origin xyz="0.0 0.0 0.00567"	rpy="0.0 0.0 0.0"	/>
+			<origin xyz="0.0 0.0 0.0"	rpy="0.0 0.0 0.0"	/>
 			<!-- Volume of a sphere V=(4/3)*pi*r^3, density 1e3kg/m^3	-->
 			<mass	value="0.0061"	/>
 			<inertia ixx="0.00000031" ixy="0.0" ixz="0.0" iyy="0.00000031" iyz="0.0" izz="0.00000031"	/>
@@ -241,28 +247,104 @@
 			</material>
 			
 		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"	/>
+			<geometry>
+				<sphere radius="0.01134"	/>
+			</geometry>
+		</collision>
 	</link>
 	
 	<!--back caster link gazebo reference -->
 	<gazebo reference="back_caster_link">
 		<material>Gazebo/Black</material>
 	</gazebo>
+
+
+	<!-- this is the laser link which a rplidar will be used-->
+	<link name="laser_link">
+		<inertial>
+			<mass value="0.1" />
+			<origin xyz="0.0 0.0 0.0" />
+			<inertia ixx="0.01" ixy="0.00" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+		</inertial>
+		
+		<visual>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
+			<geometry>
+				<cylinder length="0.02" radius="0.02" />
+			</geometry>
+			<material name="black">
+				<color rgba="0.0 0.0 0.0 1.0" />
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+			<geometry>
+				<cylinder radius="0.05" length="0.06"/>
+			</geometry>
+		</collision>
+	</link>
+
+	<gazebo reference="laser_link">
+		<material>Gazebo/Black</material>
+		<sensor type="ray" name="rplidar">
+			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
+			<visualize>false</visualize>
+			<update_rate>5.5</update_rate>
+			<ray>
+				<scan>
+					<horizontal>
+						<samples>360</samples>
+						<resolution>1</resolution>
+						<min_angle>-3</min_angle>
+						<max_angle>3</max_angle>
+					</horizontal>
+				</scan>
+				<range>
+					<min>0.10</min>
+					<max>10.0</max>
+					<resolution>0.01</resolution>
+				</range>
+				<noise>
+					<type>gaussian</type>
+					<mean>0.0</mean>
+					<stddev>0.01</stddev>
+				</noise>
+			</ray>
+			<plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
+				<topicName>/reference/scan</topicName>
+				<frameName>laser_link</frameName>
+			</plugin>
+		</sensor>
+	</gazebo>
+
+	<!-- laser joint-->
+	<joint name="laser_joint" type="fixed">
+		<origin xyz="0.0 0.0 0.0265" rpy="0.0 0.0 0.0"/>
+		<parent link="base_link"/>
+		<child link="laser_link"/>
+	</joint>
 	
+	
+	<!--
 	<gazebo>
 		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
 		</plugin>
 	</gazebo>
-
-	<!-- <gazebo>
+	-->
+	<gazebo>
 		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 			<rosDebugLevel>Debug</rosDebugLevel>
 			<publishWheelTF>true</publishWheelTF>
-			<robotNamespace>/</robotNamespace>
+			<robotNamespace>/reference</robotNamespace>
 			<publishTf>1</publishTf>
 			<publishWheelJointState>true</publishWheelJointState>
 			<alwaysOn>true</alwaysOn>
 			<updateRate>100</updateRate>
-			<legacyMode>false</legacyMode>
+			<legacyMode>true</legacyMode>
 			<leftJoint>base_l_wheel_joint</leftJoint>
 			<rightJoint>base_r_wheel_joint</rightJoint>
 			<wheelSeparation>0.1054</wheelSeparation>
@@ -276,7 +358,7 @@
 			<robotBaseFrame>base_footprint</robotBaseFrame>
 			<publishOdomTF>true</publishOdomTF>
 		</plugin>
-	</gazebo> -->
+	</gazebo> 
 	
 			
 </robot>
