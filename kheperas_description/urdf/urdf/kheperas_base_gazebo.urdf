@@ -262,71 +262,6 @@
 	</gazebo>
 
 
-	<!-- this is the laser link which a rplidar will be used-->
-	<link name="laser_link">
-		<inertial>
-			<mass value="0.1" />
-			<origin xyz="0.0 0.0 0.0" />
-			<inertia ixx="0.01" ixy="0.00" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
-		</inertial>
-		
-		<visual>
-			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0" />
-			<geometry>
-				<cylinder length="0.02" radius="0.02" />
-			</geometry>
-			<material name="black">
-				<color rgba="0.0 0.0 0.0 1.0" />
-			</material>
-		</visual>
-
-		<collision>
-			<origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-			<geometry>
-				<cylinder radius="0.05" length="0.06"/>
-			</geometry>
-		</collision>
-	</link>
-
-	<gazebo reference="laser_link">
-		<material>Gazebo/Black</material>
-		<sensor type="ray" name="rplidar">
-			<pose>0.0 0.0 0.0 0.0 0.0 0.0</pose>
-			<visualize>false</visualize>
-			<update_rate>5.5</update_rate>
-			<ray>
-				<scan>
-					<horizontal>
-						<samples>360</samples>
-						<resolution>1</resolution>
-						<min_angle>-3</min_angle>
-						<max_angle>3</max_angle>
-					</horizontal>
-				</scan>
-				<range>
-					<min>0.10</min>
-					<max>10.0</max>
-					<resolution>0.01</resolution>
-				</range>
-				<noise>
-					<type>gaussian</type>
-					<mean>0.0</mean>
-					<stddev>0.01</stddev>
-				</noise>
-			</ray>
-			<plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
-				<topicName>scan</topicName>
-				<frameName>laser_link</frameName>
-			</plugin>
-		</sensor>
-	</gazebo>
-
-	<!-- laser joint-->
-	<joint name="laser_joint" type="fixed">
-		<origin xyz="0.0 0.0 0.0265" rpy="0.0 0.0 0.0"/>
-		<parent link="base_link"/>
-		<child link="laser_link"/>
-	</joint>
 	
 	
 	<!--
@@ -338,10 +273,10 @@
 	<gazebo>
 		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 			<rosDebugLevel>Debug</rosDebugLevel>
-			<publishWheelTF>false</publishWheelTF>
-			<!--robotNamespace>/reference</robotNamespace-->
-			<publishTf>0</publishTf>
-			<publishWheelJointState>false</publishWheelJointState>
+			<publishWheelTF>true</publishWheelTF>
+			<robotNamespace>/reference</robotNamespace>
+			<publishTf>1</publishTf>
+			<publishWheelJointState>true</publishWheelJointState>
 			<alwaysOn>true</alwaysOn>
 			<updateRate>100</updateRate>
 			<legacyMode>true</legacyMode>

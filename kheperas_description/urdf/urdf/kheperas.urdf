@@ -80,7 +80,7 @@
 	<!--left wheel joint	-->
 	<joint name="base_l_wheel_joint" 	type="continuous">
 		<origin xyz="0.0 -0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
-		<parent link="base_footprint" />
+		<parent link="base_link" />
 		<child	link="left_wheel_link" />
 		<axis	xyz="0.0 0.0 1.0" />
 	</joint>
@@ -140,7 +140,7 @@
 	<!--right wheel joint	-->	
 	<joint name="base_r_wheel_joint" 	type="continuous">
 		<origin xyz="0.0 0.0527 -0.0102"	rpy="1.5707 0.0 0.0" 	/>
-		<parent link="base_footprint" />
+		<parent link="base_link" />
 		<child	link="right_wheel_link" />
 		<axis	xyz="0.0 0.0 1.0" />
 	</joint>
@@ -335,7 +335,7 @@
 				</noise>
 			</ray>
 			<plugin name="gazebo_rplidar" filename="libgazebo_ros_laser.so">
-				<topicName>/robot1/scan</topicName>
+				<topicName>scan</topicName>
 				<frameName>laser_link</frameName>
 			</plugin>
 		</sensor>
@@ -430,9 +430,9 @@
 		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
 			<rosDebugLevel>Debug</rosDebugLevel>
 			<publishWheelTF>false</publishWheelTF>
-			<robotNamespace>/robot1</robotNamespace>
-			<publishTf>1</publishTf>
-			<publishWheelJointState>true</publishWheelJointState>
+			<!--robotNamespace>/robot1</robotNamespace-->
+			<publishTf>0</publishTf>
+			<publishWheelJointState>false</publishWheelJointState>
 			<alwaysOn>true</alwaysOn>
 			<updateRate>100</updateRate>
 			<legacyMode>true</legacyMode>

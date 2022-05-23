@@ -17,50 +17,68 @@
         <arg name="headless" value="$(arg headless)"/>
     </include>
 
+    <!-- 加载机器人模型描述参数 -->
+    <param name="robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" /> 
+    
+    <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
+
+    <!-- 运行robot_state_publisher节点，发布tf  -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
+        <param name="publish_frequency" type="double" value="50.0" />
+    </node>
+
+
+    <!-- seperate each robot spawn by a namespace in order to give different topic-->
+    <group ns='robot1'>
     
         <!-- 加载机器人模型描述参数 -->
-        <param name="robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
-    
-
-        <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
-        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
-
-        <!-- 运行robot_state_publisher节点，发布tf  -->
-        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
-            <param name="publish_frequency" type="double" value="50.0" />
-        </node>
+        <param name="robot1_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
 
         <!-- 在gazebo中加载机器人模型-->
         <node name="urdf_spawner_1" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-              args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model mrobot -param robot_description"/>
-        
-    
+              args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model mrobot -param robot1_description"/>
+    </group>   
     
 
-    <group ns='reference'>
+    <group ns='robot2'>
+    
+        <!-- 加载机器人模型描述参数 -->
+        <param name="robot2_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
+
         <!-- 在gazebo中加载机器人模型-->
-        <param name="reference_robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas_reference_gazebo.urdf" />
-
-        <!-- 运行joint_state_publisher节点，发布机器人的关节状态  -->
-        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node> 
-
-        <!-- 运行robot_state_publisher节点，发布tf  -->
-        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"  output="screen" >
-            <param name="publish_frequency" type="double" value="50.0" />
-        </node> 
-
+        <!-- args x y z is the initial position of the robot settings relative to the world coordinates-->
         <node name="urdf_spawner_2" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model referenceRobot -param reference_robot_description"/> 
-        
+              args="-x -5.0 -y 0.0 -Y 0.0 -unpause -urdf -model robot2 -param robot2_description"/>
+    </group> 
 
 
-        
+    <group ns='robot3'>
+    
+        <!-- 加载机器人模型描述参数 -->
+        <param name="robot3_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
+    
+
+        <!-- 在gazebo中加载机器人模型-->
+        <!-- args x y z is the initial position of the robot settings relative to the world coordinates-->
+        <node name="urdf_spawner_3" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+              args="-x -4.0 -y 5.0 -Y 0.0 -unpause -urdf -model robot3 -param robot3_description"/>
+    </group> 
+
+
+
+    <group ns='robot4'>
+        <!-- 在gazebo中加载机器人模型-->
+        <param name="reference_robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
+
+        <node name="urdf_spawner_reference" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot4 -param reference_robot_description"/> 
     
     </group>
     <!--
     <node pkg='tf' type='static_fransform_publisher' name='odom_to_base_footprint' args='0.0 0.0 0.0 0.0 0.0 0.0 /odom /base_footprint 1000' />
     -->
     <!-- run rviz	-->
-	<node name="rviz" 	pkg="rviz" 	type="rviz" 	args="-d $(find kheperas_description)/config/laser_kheperas_gazebo.rviz" 	required="true"	/>
+	<!--node name="rviz" 	pkg="rviz" 	type="rviz" 	args="-d $(find kheperas_description)/config/laser_kheperas_gazebo.rviz" 	required="true"	/-->
 
 </launch>
