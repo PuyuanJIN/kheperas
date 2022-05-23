@@ -99,3 +99,116 @@ Author: Puyuan JIN <puyuan843088702@gmail.com>
 Date:   Sat Nov 13 12:14:27 2021 +0000
 
     This repository will serve as a housekeeper and log book for this ROS workspace.
+commit 6ab42570318fc4be48f2e0f6643e0cb720f0a1b7
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Wed Apr 13 23:18:31 2022 +0100
+
+    test test
+
+commit 7af2a376bc674cc63caa6eb8e06f89cbd059ac55
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Mar 15 15:38:25 2022 +0000
+
+    Created a new urdf file which add on a camera to the robot. Created a new launch file accordingly and updated the rviz visualised window.
+
+commit 85f8530aa12fdcc75805be5ef639457b5576f043
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Thu Mar 10 17:38:33 2022 +0000
+
+    The probability of delivery failure modulu is coded. The noise spectral power density formula can be looked into more deeply.
+
+commit 45f78eaa9bc75dc81433679111bf36d00ff74d76
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Thu Feb 24 18:09:40 2022 +0000
+
+    package robot_localization is pulled from github however there is missing dependency for cmake the package, the launch file has the robot now.
+
+commit 4c422762beb9fea596aa2e151a91146ac65c1f96
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Mon Feb 14 11:07:05 2022 +0000
+
+    Added in a imu sensor which linked to the base_link of the Kheperas robot.
+
+commit 0aed655dda993f1bc88886e00adfc4831a9e4ce9
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Wed Feb 9 20:30:22 2022 +0000
+
+    new folder called python is made to contain all python scripts.
+
+commit a3bbe0e8a58eb7330d5fd85a6d73517e3796d5c0
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Fri Dec 10 17:37:55 2021 +0000
+
+    there is a controller yaml file made to replace the gazebo hardcoded diff_drive in order to rule out the reason why the robot has a random swift. The problem has finally been pinned to the urdf file which is the geometry of the robot. The swift happens due to there is not enough contact file for the robot to be dynamic stable and it is finally been solved. the gazebo simulation is now stable.
+
+commit e9fb6071cc26be5c9f0021cd808ffb3cadce6a9c
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Thu Dec 9 15:28:29 2021 +0000
+
+    I have added a rplider link to the kheperas robot and config the laser to work in the simulation.
+
+commit 6d62baaeec6ae0212238df36d6f284c36a5fa5e4
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 30 20:20:46 2021 +0000
+
+    Adding friction property to the two driving wheels does not solve the rotation problem in the gazebo simulation.
+
+commit a5f4b26a1acc11bfebb457ca0e4fa14c7985783e
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 30 17:04:57 2021 +0000
+
+    I have created a gazebo environment for the robot to run in. But on the terminal the spawn service randomly fail, i have no idea why. But from the view of gazebo, everything initiated nicely. this failure does not happen everytime. this might be some error in the launch file or the kheperas.urdf.
+
+commit d88c662a2bb64bd547edef42ecfae9da491524da
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Mon Nov 29 17:51:56 2021 +0000
+
+    i have tried again to use xacro to format the kheperas urdf but it does not work again, i have no idea why. SO i move back to the standard urdf format to code it in the original way. The robot spawn in the gazebo nicely but it has a werid moving which is not desired.
+
+commit 3bf1651341cc654c2e33485af2681419cd6cf4e5
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Mon Nov 22 19:30:55 2021 +0000
+
+    the kheperas base xacro files and its launch file has been coded, however there is some problem with the macro kheperas which need to be solved.
+
+commit a91ce40265959e5a4b3e09701c3bc75281b04735
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Mon Nov 22 17:54:26 2021 +0000
+
+    created urdf and xacro folder in urdf and launch folder in order to distinguish what is the different robot config file and it's according launch file.
+
+commit 3cdbf3f28318840e840feabf97131beada4f1fcf
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 16 18:02:32 2021 +0000
+
+    The color display for the wheels and casters are wrong, this need to be dealt with next time.
+
+commit 386b2f5ae32145d65f71edc50f0fa4209aef8468
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 16 17:52:24 2021 +0000
+
+    Config ArbotiX as the differential driver for the odomtry. Configure the launch file and made the controller yaml file. Apply to the kheperas robot and move it in the rviz.
+
+commit 0cfb9c68f33897f83601f59e0a343cf80f1abb0f
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 16 16:23:08 2021 +0000
+
+    Fixed the wheel rotation axis.
+
+commit 01b37f407b50d7d3799cd240b73e2e3d1258c481
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Tue Nov 16 15:12:26 2021 +0000
+
+    Added inertial property such as mass, inertia to the kheperas. The rviz gives a warning about the base link does not support an inertia value. This need to be deal with if futhure problems come across. Other than this, the inertial properties loaded corrected.
+
+commit 6d62554fdeabb23a3c5f51474e11e245e9e3992d
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Sat Nov 13 12:38:34 2021 +0000
+
+    Fixed the kheperas_description package path problem, transferred the kheperas urdf and named each file to its proper name. Made the desired rviz config
+
+commit 7ffa7835f5ee5e57676cfe9c0cd47bb8f2dae3a6
+Author: Puyuan JIN <puyuan843088702@gmail.com>
+Date:   Sat Nov 13 12:14:27 2021 +0000
+
+    This repository will serve as a housekeeper and log book for this ROS workspace.

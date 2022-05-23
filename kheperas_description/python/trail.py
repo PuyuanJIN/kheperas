@@ -24,7 +24,8 @@ from rotation import *
 
 if __name__ == '__main__':
     rospy.init_node('trail')
-    display_position()
+    position2()
+    move()
 
 
 

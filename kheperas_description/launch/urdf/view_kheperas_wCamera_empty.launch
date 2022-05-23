@@ -37,7 +37,7 @@
 
         <!-- 在gazebo中加载机器人模型-->
         <node name="urdf_spawner_1" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-              args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model mrobot -param robot1_description"/>
+              args="-x 2.0 -y 2.0 -Y 0.0 -unpause -urdf -model robot1 -param robot1_description"/>
     </group>   
     
 

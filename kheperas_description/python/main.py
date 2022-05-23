@@ -33,8 +33,7 @@ class Move(State):
     
     def execute(self, userdata):
 
-        move(1,0.5)
-        position_mrobot()
+        move()
         print('success')
         return 'success'
 
@@ -45,32 +44,37 @@ class Rotate(State):
     
     def execute(self, userdata):
 
-        rotate(90)
+        rotate()
         sleep(1)
-        position_mrobot()
         print('success')
         return 'success'
 
 
 class Wait(State):
     def __init__(self):
-        State.__init__(self, outcomes=['move','rotate','signal check'])
+        State.__init__(self, outcomes=['move','rotate','signal check','odom'])
     
     def execute(self, userdata):
         print('''
         #####################
+        Welcome to the robot simulator control pannel!
+        Available command are following:
+        ---------------------
+        # odom  -print out robot position
         # m     -move
         # r     -rotate
         # s     -signal check
         #####################
         ''')
-        command = input('user input>')
+        command = input('~')
         if command == 'm':
             return 'move'
         elif command == 'r':
             return 'rotate'
         elif command == 's':
             return('signal check')
+        elif command =='odom':
+            return 'odom'
         else:
             exit()
 
@@ -84,17 +88,26 @@ class Signal(State):
         print('success')
         return 'success'
 
+#this is the class that give robot position 
+class Odom(State):
+    def __init__(self):
+        State.__init__(self, outcomes=['success'])
+    
+    def execute(self, userdata):
+        position2()
+        return 'success'
+
+
 
 if __name__ == '__main__':
     rospy.init_node('patrol')
-    display_position()
     patrol = StateMachine('WAIT')
 
     with patrol:
-        StateMachine.add('WAIT', Wait(), transitions={'move':'Move','rotate':'Rotate','signal check':'Signal'})
+        StateMachine.add('WAIT', Wait(), transitions={'move':'Move','rotate':'Rotate','signal check':'Signal','odom':'Odom'})
         StateMachine.add('Move',Move(),transitions={'success':'WAIT'})
         StateMachine.add('Rotate', Rotate(),transitions={'success':'WAIT'})
         StateMachine.add('Signal', Signal(),transitions={'success':'WAIT'})
-
+        StateMachine.add('Odom', Odom(),transitions={'success':'WAIT'})
     
     patrol.execute()

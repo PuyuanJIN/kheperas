@@ -53,10 +53,26 @@ def planner(goal):
     sleep(1)
 
 
-def rotate(degrees):
+def rotate():
+
+    #request the robot name that the user want to use
+    print('''
+        =====================
+        input the robot you want to control, options below 
+        # 1     -robot 1
+        # 2     -robot 2
+        # 3     -robot 3
+        # 4     -robot 4
+        =====================
+        ''')
+    robot_index = input('~')
+
+    #convert into a valid rostopic name/path
+    topic_name = '/robot' + str(robot_index) + '/cmd_vel'
+    print('publisher direct to the following path:{}'.format(topic_name))
 
     #ros velocity publisher initialised
-    vel_pub = rospy.Publisher('/cmd_vel',Twist, queue_size=1)
+    vel_pub = rospy.Publisher(topic_name,Twist, queue_size=1)
 
     #command initialized
     move_cmd = Twist()
@@ -72,6 +88,19 @@ def rotate(degrees):
     #set default command signal rate to 5Hz
     Hz = 20
 
+    print('''
+        =====================
+        input rotate command, format direction,angle
+        for example:
+        1,90        rotate 90 degrees anti-clockwise
+        -1,180      rotate 180 degrees clockwise
+        =====================
+        ''')
+    
+    command = input('~')
+    direction = int(command.split(',')[0])
+    degrees = float(command.split(',')[1])
+
     goal = math.radians(degrees)
     t = goal/angular_speed*Hz
     t_total = goal / angular_speed * Hz + Hz
@@ -81,7 +110,7 @@ def rotate(degrees):
     rate = rospy.Rate(Hz)
     while i <= t_total:
         if i < t:
-            move_cmd.angular.z = angular_speed
+            move_cmd.angular.z = angular_speed * direction
         else:
             move_cmd.angular.z = 0.0
         

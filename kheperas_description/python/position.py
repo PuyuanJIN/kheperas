@@ -37,7 +37,7 @@ def position2():
     rot = (obj.pose.orientation.x,obj.pose.orientation.y,obj.pose.orientation.z,obj.pose.orientation.w)
     euler = euler_from_quaternion(rot)
     yaw_cur = math.degrees(euler[2])
-    
+    print('{} position:[{}, {}, {}]'.format(model_name,round(state[0],4), round(state[1],4), round(yaw_cur,4)))
     return round(state[0],4), round(state[1],4), round(yaw_cur,4)
 
 def position_mrobot():
