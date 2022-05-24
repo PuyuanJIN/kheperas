@@ -20,12 +20,11 @@ sys.path.append('~/home/catkin_ws/src/kheperas_description/python')
 from position import *
 from move import *
 from rotation import *
+from pathloss import *
 
 
 if __name__ == '__main__':
-    rospy.init_node('trail')
-    position2()
-    move()
+    eta_calculator()
 
 
 

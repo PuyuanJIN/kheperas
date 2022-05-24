@@ -24,10 +24,21 @@ import numpy as np
 
 
 def eta_calculator():
-    x = np.linspace(0.01,3)
-    qpsk = special.erfc(0.1*x)
+
+    x = np.linspace(0.01,100)
+
+    #compute the receving power, transmitter is working at 8W, 2.4GHz
+    fspl = [8/((4*math.pi*i*2.4*(10**9)/(3*(10**8)))**2) for i in x]
+
+    N_0 = -174+11+10*math.log(2.4*10**9,10)     #compute the noise spectral power density with respect of 2.4GHz bandwidth, unit dBm
+    pN_0 = 10**(N_0/10)     #convert dBm to mW
+
+    energy_ratio = [math.sqrt(i/pN_0) for i in fspl]
+
+    qpsk = special.erfc(energy_ratio)
+
     log = [math.log(1-i,10) for i in qpsk]
-    deliveryfailure = [1 - math.e**(4*i) for i in log]
+    deliveryfailure = [1 - math.e**(4*100*i) for i in log]
     
     plt.plot(x,deliveryfailure)
     plt.title('probaility versus energy ratro')
