@@ -1,7 +1,7 @@
 <launch>
 
     <!-- 设置launch文件的参数 -->
-    <arg name="world_name" value="$(find kheperas_description)/config/world/myWorld.world"/>
+    <arg name="world_name" value="$(find kheperas_description)/config/world/empty_world.world"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
@@ -10,6 +10,7 @@
 
     <!-- 运行gazebo仿真环境 -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)" />
         <arg name="debug" value="$(arg debug)" />
         <arg name="gui" value="$(arg gui)" />
         <arg name="paused" value="$(arg paused)"/>
@@ -69,10 +70,10 @@
 
     <group ns='robot4'>
         <!-- 在gazebo中加载机器人模型-->
-        <param name="reference_robot_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
+        <param name="robot4_description" textfile="$(find kheperas_description)/urdf/urdf/kheperas.urdf" />
 
-        <node name="urdf_spawner_reference" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
-          args="-urdf -model robot4 -param reference_robot_description"/> 
+        <node name="urdf_spawner_4" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen"
+          args="-urdf -model robot4 -param robot4_description"/> 
     
     </group>
     <!--
