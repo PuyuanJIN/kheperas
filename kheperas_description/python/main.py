@@ -1,6 +1,7 @@
 
 from email.errors import MissingHeaderBodySeparatorDefect
 from pdb import post_mortem
+from turtle import st
 import rospy
 import actionlib
 from smach import State, StateMachine
@@ -83,8 +84,21 @@ class Signal(State):
         State.__init__(self, outcomes=['success'])
     
     def execute(self, userdata):
+        print('''
+        =====================
+        input robot name, format name,name
+        for example:
+        robot1,robot2   check signal between robot 1 & 2
+        robot3,robot4   check signal between robot 3 & 4
+        =====================
+        ''')
+        
+        command = input('~')
+        a = str(command.split(',')[0])
+        b = str(command.split(',')[1])
 
-        DeliveryFailure()
+        value = probability_calculator(distance_calculator(a,b))
+        print('The probability of delivery falure between {} and {} is {}'.format(a,b,round(value,6)))
         print('success')
         return 'success'
 

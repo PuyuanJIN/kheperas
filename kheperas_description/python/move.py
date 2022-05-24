@@ -58,7 +58,7 @@ def move():
     
     command = input('~')
     direction = int(command.split(',')[0])
-    distance = int(command.split(',')[1])
+    distance = float(command.split(',')[1])
 
     t = distance / linear_speed * Hz
     t_total = t + Hz
