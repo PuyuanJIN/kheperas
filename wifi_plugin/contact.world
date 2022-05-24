@@ -30,6 +30,7 @@
         </visual>
 
         <sensor name='my_contact' type='contact'>
+        	<plugin name="my_plugin" filename="libcontact.so"/>
           <contact>
             <collision>box_collision</collision>
           </contact>
