@@ -40,10 +40,23 @@ def position2():
     print('{} position:[{}, {}, {}]'.format(model_name,round(state[0],4), round(state[1],4), round(yaw_cur,4)))
     return round(state[0],4), round(state[1],4), round(yaw_cur,4)
 
+def position3(a):
+    get_state_service = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
+    model = GetModelStateRequest()
+    model.model_name=str(a)
+    obj = get_state_service(model)
+    state=(obj.pose.position.x,obj.pose.position.y)
+    #print(state[0],state[1])
+    rot = (obj.pose.orientation.x,obj.pose.orientation.y,obj.pose.orientation.z,obj.pose.orientation.w)
+    euler = euler_from_quaternion(rot)
+    yaw_cur = math.degrees(euler[2])
+    #print('{} position:[{}, {}, {}]'.format(model_name,round(state[0],4), round(state[1],4), round(yaw_cur,4)))
+    return round(state[0],4), round(state[1],4), round(yaw_cur,4)
+
 def position_mrobot():
     get_state_service = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
     model = GetModelStateRequest()
-    model.model_name='mrobot'
+    model.model_name='robot1'
     obj = get_state_service(model)
     state=(obj.pose.position.x,obj.pose.position.y)
     #print(state[0],state[1])
