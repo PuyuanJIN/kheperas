@@ -84,7 +84,7 @@ def rotate():
     move_cmd.angular.z = 0.0
 
     #set default angular speed to 0.3 rad/s
-    angular_speed = 0.5
+    angular_speed = 0.4
     #set default command signal rate to 5Hz
     Hz = 20
 

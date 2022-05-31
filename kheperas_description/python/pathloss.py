@@ -40,7 +40,7 @@ def eta_calculator():
     log = [math.log(1-i,10) for i in qpsk]
     deliveryfailure = [1 - math.e**(4*100*i) for i in log]
     
-    plt.plot(x,deliveryfailure)
+    plt.plot(x,qpsk)
     plt.title('probaility versus energy ratro')
     plt.xlabel('sqrt of $Eb/N0$')
     plt.ylabel('probability of delivery failure')
@@ -95,7 +95,7 @@ def probability_calculator(dist):
     eta=1
     #the power of a standard router is 2W at 2.4GHz 
     #compute the signal power at the receiver end
-    P_0 = (eta*((signal_wavelength/math.pi/4/dist)**2)*0.8)
+    P_0 = ((signal_wavelength/math.pi/4/dist)**2)*0.8
 
     byte = 4 * 360      #the rplidar data package is consist of 360 set of floating number
 
@@ -113,7 +113,7 @@ def probability_calculator(dist):
     #print('the symbol error rate is {}'.format(qpsk))
 
 
-    log = math.log(1-qpsk,10)
+    log = math.log(1-eta*qpsk,10)
     deliveryfailure = 1 - math.e**(byte*log)
     #print('the probability of delivery failure is: {}.'.format(deliveryfailure))
     return deliveryfailure
